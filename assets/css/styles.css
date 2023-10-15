@@ -37,7 +37,7 @@ ul {
 }
 
 button {
-  font-size: 1.5em;
+  font-size: 1em;
   font-weight: bold;
   padding: 10px 30px;
   border-radius: 10px;
@@ -87,10 +87,25 @@ header nav {
 .navbar-nav {
   display: flex;
   list-style: none;
+  padding: 1em;
+  align-items: center;
+}
+
+.navbar-nav input {
+  background-color: transparent;
+  border: 1px solid;
+  border-color: #efefef;
+  border-radius: 1em;
+  color: #efefef;
+  padding-left: 1em;
+}
+
+.nav-logo {
+  height: 7.5em;
 }
 
 .nav-item {
-  margin-right: 10px;
+  margin: 0em 1em 0em 1em;
 }
 
 .nav-link {
@@ -104,6 +119,10 @@ header nav {
 .form-inline {
   display: flex;
   align-items: center;
+}
+
+.btn-nav {
+  padding: 0.1em 1em 0.1em 1em;
 }
 
 header a {
@@ -165,6 +184,9 @@ header a:hover {
   padding: 250px;
   margin: 70px;
   border-radius: 15px;
+}
+.carta h3{
+  text-shadow: .1em .1em .1em #0f0f0f;
 }
 
 .boxeo {
@@ -257,10 +279,14 @@ header a:hover {
 }
 
 .box-link {
-  text-align: center;
+  text-align: left;
   font-family: monospace;
   font-size: x-large;
   color: #7dba2e;
+}
+
+.box-link img {
+  text-align: center;
 }
 
 .box-link .footer-item {
@@ -485,4 +511,8 @@ a:link {
 
 .login-box a:hover {
   color: #2ca128;
+}
+
+.logo-texto {
+  height: 3rem;
 }
