@@ -2,8 +2,8 @@
 class Conexion {
     private $DBType = 'mysqli';
     private $DBServer = 'localhost';
-    private $DBUser = 'poncho';
-    private $DBPass = '123';
+    private $DBUser = 'root';
+    private $DBPass = '';
     private $DBName = 'carrito';
     private $conect;
 

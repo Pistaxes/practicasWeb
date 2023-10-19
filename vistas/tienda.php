@@ -38,6 +38,9 @@ $objProducto = new Producto();
             <a class="nav-link" href="../vistas/login.html">Visitas</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="../vistas/tienda.php">Tienda</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="../vistas/checkout.php">Checkout</a>
           </li>
           <div class="form-nav nav-item">
@@ -63,7 +66,7 @@ $objProducto = new Producto();
 
       foreach ($products as $product) {
         echo '
-      <div class="col-3">
+      <div class="col">
         <img title="Titulo producto" alt="Titulo" class="card-img-top" src="../assets/imagenes/imagen(' . $product['id_producto']  . ').jpeg" />
         <div class="card-body">
           <span>' . $product['nombre'] . '</span>

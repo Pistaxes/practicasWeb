@@ -17,6 +17,7 @@ $objProducto = new Producto();
   <link rel="stylesheet" href="../assets/css/styles.css" />
   <style></style>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
   <?php
   session_start();
 
@@ -37,6 +38,12 @@ $objProducto = new Producto();
           <li class="nav-item">
             <a class="nav-link" href="../vistas/login.html">Visitas</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../vistas/tienda.php">Tienda</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../vistas/checkout.php">Checkout</a>
+          </li>
           <div class="form-nav nav-item">
             <form class="form-inline my-2 my-lg-0">
               <input class="form-control mr-sm-2 nav-item" type="search" aria-label="Search" />
@@ -49,57 +56,134 @@ $objProducto = new Producto();
   </header>
 
   <!--Seccion productos-->
+
   <div class="container">
     <div class="row">
+      <div class="col">
+        <?php
+        $carrito = $_SESSION['carrito'];
 
-      <?php
 
+        $productosUnicos = array();
 
-      foreach ($_SESSION['carrito'] as $product) {
-        $detalleProducto = $objProducto->getProductosconid($product);
-        echo '
-      <div class="col-3">
-        <img title="Titulo producto" alt="Titulo" class="card-img-top" src="../assets/imagenes/imagen(' . $detalleProducto['id_producto']  . ').jpeg" />
-        <div class="card-body">
-          <span>' . $detalleProducto['nombre'] . '</span>
-          <h5 class="card-tittle">$' . $detalleProducto['precio'] . '</h5>
-          <p class="card-text">
-            ' . $detalleProducto['descripcion'] . '
-          </p>
-          </div>
+        foreach ($carrito as $product) {
+          if (!isset($productosUnicos[$product])) {
+            $productosUnicos[$product] = 1;
+          } else {
+            $productosUnicos[$product]++;
+          }
+        }
+
+        foreach ($productosUnicos as $productID => $cantidad) {
+          $detalleProducto = $objProducto->getProductosconid($productID);
+
+          if ($detalleProducto) {
+            echo '
+        <div class="row producto-checkout">
+            <div class="col">
+                <img title="Titulo producto" alt="Titulo" class="card-img-top" src="../assets/imagenes/imagen(' . $detalleProducto[0]['id_producto']  . ').jpeg" />
+                <div class="card-body">
+                    <span>' . $detalleProducto[0]['nombre'] . '</span>
+                    <h5 class="card-tittle">$' . $detalleProducto[0]['precio'] . '</h5>
+                    <p class="card-text">' . $detalleProducto[0]['descripcion'] . '</p>
+                </div>
+            </div>
+            <div class="col">
+                <button class="btn mas" data-product="' . $productID . '">+</button>
+                <input type="text" class="cantidad" value="' . $cantidad . '" id="input-' . $productID . '">
+                <button class="btn menos" data-product="' . $productID . '">-</button>
+            </div>
+        </div>
+        ';
+          }
+        }
+        ?>
       </div>
-      ';
-      }
-      ?>
+      <div class="col" id="total">
+        <?php
+        $carrito = $_SESSION['carrito'];
+        $total = 0;
 
+
+        $productosUnicos = array();
+
+        foreach ($carrito as $product) {
+          if (!isset($productosUnicos[$product])) {
+            $productosUnicos[$product] = 1;
+          } else {
+            $productosUnicos[$product]++;
+          }
+        }
+
+        foreach ($productosUnicos as $productID => $cantidad) {
+          $detalleProducto = $objProducto->getProductosconid($productID);
+
+          if ($detalleProducto) {
+            $total += $detalleProducto[0]['precio'] * $cantidad;
+          }
+        }
+
+        echo 'Total: $' . $total;
+        ?>
+
+      </div>
     </div>
   </div>
   <script>
     $(document).ready(function() {
-      var botones = document.querySelectorAll('.addCarrito');
+      $(".mas").on("click", function() {
+        var productID = $(this).data("product");
+        aumentarCantidad(productID);
+      });
 
-      for (var i = 0; i < botones.length; i++) {
-        botones[i].addEventListener('click', function() {
-          var id_producto = this.value;
-          $.ajax({
-            url: "../database/add_producto.php",
-            method: "POST",
-            data: {
-              id_producto: id_producto
-            },
-            success: function() {
-              $.ajax({
-                url: "../database/get_cantidad_carrito.php", // URL para obtener el valor del carrito
-                method: "GET",
-                success: function(data) {
-                  // Actualiza el contenido del div con el nuevo valor
-                  $("#carritoCount").html(data);
-                  console.log("Se ingresó");
-                }
-              });
+      $(".menos").on("click", function() {
+        var productID = $(this).data("product");
+        disminuirCantidad(productID);
+      });
+
+      function aumentarCantidad(productID) {
+        $.ajax({
+          url: "../database/aumentar_cantidad.php",
+          method: "POST",
+          data: {
+            productID: productID
+          },
+          success: function(response) {
+            actualizarTotal();
+            var cantidadInput = $("#input-" + productID);
+            cantidadInput.val(parseInt(cantidadInput.val()) + 1);
+          }
+        });
+      }
+
+      function disminuirCantidad(productID) {
+        $.ajax({
+          url: "../database/disminuir_cantidad.php",
+          method: "POST",
+          data: {
+            productID: productID
+          },
+          success: function(response) {
+            actualizarTotal();
+            var cantidadInput = $("#input-" + productID);
+            var cantidadActual = parseInt(cantidadInput.val());
+            if (cantidadActual > 1) {
+              cantidadInput.val(cantidadActual - 1);
+            } else {
+              cantidadInput.val(0);
             }
+          }
+        });
+      }
 
-          });
+      function actualizarTotal() {
+        $.ajax({
+          url: "../database/actualizar_total.php",
+          method: "GET",
+          success: function(data) {
+
+            $("#total").text("Total: $" + data);
+          }
         });
       }
     });

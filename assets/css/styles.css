@@ -516,3 +516,56 @@ a:link {
 .logo-texto {
   height: 3rem;
 }
+
+.producto-checkout {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.producto-checkout img {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+.producto-checkout .card-body {
+  margin-left: 10px;
+}
+
+.producto-checkout .card-body span {
+  font-weight: bold;
+}
+
+.producto-checkout .card-tittle {
+  font-size: 1.25rem;
+  color: #7dba2e;
+}
+
+.producto-checkout .btn {
+  background-color: #7dba2e;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.producto-checkout .cantidad {
+  width: 30px;
+  text-align: center;
+}
+.row {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+.col {
+  -ms-flex-preferred-size: 0;
+  flex-basis: 0;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  max-width: 100%;
+}
