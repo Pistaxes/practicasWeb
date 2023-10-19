@@ -1,3 +1,7 @@
+<?php
+  include '../controladores/session/session_controller.php'
+?>
+
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -9,6 +13,7 @@
     <style></style>
   </head>
   <body>
+    <!--Seccion productos
     <header>
       <nav class="navbar navbar-expand-lg navbar-light">
         <div class="navegacion">
@@ -44,24 +49,20 @@
           </ul>
         </div>
       </nav>
-    </header>
+    </header>-->
 
     
     <div class="login-box">
-      <img src="img/logo.png" class="avatar" alt="Avatar Image">
+      <img src="" class="" alt="">
       <h1>Login Here</h1>
-      <form>
-      
-        <label for="username">Username</label>
-        <input type="text" placeholder="Enter Username">
-        <label for="password">Password</label>
-        <input type="password" placeholder="Enter Password">
-        <input type="submit" value="Log In">
-        <a href="#">Lost your Password?</a><br>
-        <a href="#">Don't have An account?</a>
+      <form method="POST">
+        usuario <input type="text" name="user"><br>
+        password <input type="text" name="pass"><br>
+        <input type="submit" name="btnSubmit" value="Entrar">
       </form>
     </div>
-  </body>
-</html>
+
+
+
   </body>
 </html>

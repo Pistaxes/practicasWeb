@@ -37,9 +37,6 @@ $objProducto = new Producto();
           <li class="nav-item">
             <a class="nav-link" href="../vistas/login.html">Visitas</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../vistas/checkout.php">Checkout</a>
-          </li>
           <div class="form-nav nav-item">
             <form class="form-inline my-2 my-lg-0">
               <input class="form-control mr-sm-2 nav-item" type="search" aria-label="Search" />
@@ -56,24 +53,19 @@ $objProducto = new Producto();
     <div class="row">
 
       <?php
-      $products = $objProducto->getProductos();
-      if (!isset($_SESSION['carrito'])) {
-        $_SESSION['carrito'] = array();
-      }
 
-      foreach ($products as $product) {
+
+      foreach ($_SESSION['carrito'] as $product) {
+        $detalleProducto = $objProducto->getProductosconid($product);
         echo '
       <div class="col-3">
-        <img title="Titulo producto" alt="Titulo" class="card-img-top" src="../assets/imagenes/imagen(' . $product['id_producto']  . ').jpeg" />
+        <img title="Titulo producto" alt="Titulo" class="card-img-top" src="../assets/imagenes/imagen(' . $detalleProducto['id_producto']  . ').jpeg" />
         <div class="card-body">
-          <span>' . $product['nombre'] . '</span>
-          <h5 class="card-tittle">$' . $product['precio'] . '</h5>
+          <span>' . $detalleProducto['nombre'] . '</span>
+          <h5 class="card-tittle">$' . $detalleProducto['precio'] . '</h5>
           <p class="card-text">
-            ' . $product['descripcion'] . '
+            ' . $detalleProducto['descripcion'] . '
           </p>
-          <button class="btn btn-primary addCarrito" name="btnAccion" value="' . $product['id_producto'] . '" type="submit">
-            Agregar al carrito
-          </button>
           </div>
       </div>
       ';
