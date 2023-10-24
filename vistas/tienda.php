@@ -15,6 +15,7 @@ $objProducto = new Producto();
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>X Fit</title>
   <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
   <style></style>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <?php
@@ -55,6 +56,26 @@ $objProducto = new Producto();
   </header>
 
   <!--Seccion productos-->
+  <nav class="navbar-carrito float-right padding-right-10px">
+    <div class="carritoCount" id="carritoCount">
+      <?php echo count($_SESSION['carrito']); ?>
+    </div>
+    <i class="fas fa-shopping-cart" onclick="window.location.href='../vistas/checkout.php'"></i>
+
+    <script>
+      $(document).ready(function() {
+        // Obtenemos el número de artículos del carrito
+        var numeroArticulos = parseInt($("#carritoCount").text());
+
+        // Actualizamos el icono de carrito
+        $("#carrito").html(
+          `<i class="fas fa-shopping-cart"></i> ${numeroArticulos}`
+        );
+      });
+    </script>
+
+  </nav>
+
   <div class="container">
     <div class="row">
 
@@ -77,7 +98,7 @@ $objProducto = new Producto();
           <button class="btn btn-primary addCarrito" name="btnAccion" value="' . $product['id_producto'] . '" type="submit">
             Agregar al carrito
           </button>
-          </div>
+        </div>
       </div>
       ';
       }
@@ -115,7 +136,7 @@ $objProducto = new Producto();
       }
     });
   </script>
-  <div id="carritoCount"><?php echo count($_SESSION['carrito']); ?></div>
+  
 
   <footer class="pie-pagina">
     <div class="grupo-1">
@@ -154,6 +175,9 @@ $objProducto = new Producto();
       <small>&copy; 2021 <b>X FIT</b> - Todos los Derechos Reservados.</small>
     </div>
   </footer>
+
+    
+
 </body>
 
 </html>
